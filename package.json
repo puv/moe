@@ -4,7 +4,7 @@
   "description": "A simple yet unique anime streaming service",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p src -outDir dist",
+    "build": "tsc -p . -outDir dist",
     "lint": "eslint --ext .ts src",
     "lint:fix": "npm run lint -- --fix"
   },
