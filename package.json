@@ -4,9 +4,10 @@
   "description": "A simple yet unique anime streaming service",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p . -outDir dist",
+    "build": "tsc -p . -outDir dist && npm run copy-files",
     "lint": "eslint --ext .ts src",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "copy-files": "cp -r src/public dist/public && cp -r src/views dist/views"
   },
   "repository": {
     "type": "git",
