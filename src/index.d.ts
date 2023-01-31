@@ -1,0 +1,1 @@
+// TODO: Learn how to write a proper type definition file
