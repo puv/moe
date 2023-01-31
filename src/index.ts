@@ -18,11 +18,6 @@ db.then(async () => {
     console.log(err);
 });
 
-
-// Routes
-const authRoute = require("./routes/auth");
-const indexRoute = require("./routes/index");
-
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.set("trust proxy", true);
@@ -45,11 +40,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
-
-// Middleware Routes
-app.use("/auth", authRoute);
-app.use("/", indexRoute);
+app.use(require("./routes/_routing"))
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
