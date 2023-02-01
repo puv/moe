@@ -7,7 +7,8 @@
     "build": "tsc -p . -outDir dist && npm run copy-files",
     "lint": "eslint --ext .ts src",
     "lint:fix": "npm run lint -- --fix",
-    "copy-files": "cp -r src/public dist/public && cp -r src/views dist/views"
+    "copy-files": "cp -r src/public dist/public && cp -r src/views dist/views",
+    "run": "npm run build && nodemon dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -28,11 +29,13 @@
     "@types/cookie-parser": "^1.4.3",
     "@types/express": "^4.17.16",
     "@types/express-session": "^1.17.5",
+    "@types/mongoose": "^5.11.97",
     "@types/passport": "^1.0.11",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
     "dotenv": "^16.0.3",
-    "eslint": "^8.33.0"
+    "eslint": "^8.33.0",
+    "nodemon": "^2.0.20"
   },
   "dependencies": {
     "body-parser": "^1.20.1",
