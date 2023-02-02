@@ -1,4 +1,4 @@
-const app = require("express")();
+import app from "../index";
 
 const authRoute = require("./auth");
 const indexRoute = require("./index");

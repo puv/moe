@@ -2,13 +2,13 @@
   "name": "moe",
   "version": "0.0.1",
   "description": "A simple yet unique anime streaming service",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p . -outDir dist && npm run copy-files",
     "lint": "eslint --ext .ts src",
     "lint:fix": "npm run lint -- --fix",
     "copy-files": "cp -r src/public dist/public && cp -r src/views dist/views",
-    "run": "npm run build && nodemon dist/index.js"
+    "start": "npm run build && nodemon dist/index.js"
   },
   "repository": {
     "type": "git",

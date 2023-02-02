@@ -45,3 +45,5 @@ app.use(require("./routes/_routing"))
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
+
+export default app;
