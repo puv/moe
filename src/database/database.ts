@@ -10,4 +10,6 @@ const options: ConnectOptions = {
 
 export default mongoose.connect(process.env.DB_URI!, options);
 
+export { }
+
 // module.exports = mongoose.connect(process.env.DB_URI!, options);
