@@ -1,13 +1,18 @@
-const router = require('express').Router();
-const passport = require('passport');
-const db = require("../database/database")
-const { isAuth, isUnAuth } = require('./_Functions.js');
+import { Router } from "express";
+import { isAuth, isUnAuth } from "./_functions";
+import moment from "moment";
+import "moment-duration-format";
+
+const router = Router();
+import passport from "passport";
+import db from "../database/database";
+
 
 const initPass = require("../../passport-config.js");
 initPass.init(
-  passport,
-  (email) => db.getAll("users").filter((u) => u.email === email)[0],
-  (id) => db.getAll("users").filter((u) => u.id === id)[0]
+    passport,
+    (email: String) => db.getAll("users").filter((u) => u.email === email)[0],
+    (id: String) => db.getAll("users").filter((u) => u.id === id)[0]
 );
 
 

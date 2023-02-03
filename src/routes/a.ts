@@ -1,8 +1,10 @@
 import { Router } from "express";
+import { isAuth, isUnAuth } from "./_functions";
+import db from "../database/database";
+import moment from "moment";
+import "moment-duration-format";
 
 const router = Router();
-
-import { isAuth, isUnAuth } from "./_functions";
 
 router.get("/:id", isAuth, async (req, res) => {
   try {
@@ -84,19 +86,19 @@ router.get("/:id", isAuth, async (req, res) => {
         text: anime.info.description
       }
 
-      console.log(req.user.animes)
-      uStatus = Object.keys(req.user.animes).includes(anime.id) ? Object.values(req.user.animes[anime.id]) : false;
+      console.log(req.user!.animes)
+      let uStatus = Object.keys(req.user!.animes).includes(anime.id) ? Object.values(req.user!.animes[anime.id]) : false;
       console.log(uStatus)
 
       let animeList = db.getAll("anime");
 
-      nextAirString = anime.info.nextAiringEpisode ? moment
+      let nextAirString = anime.info.nextAiringEpisode ? moment
         .duration(anime.info.nextAiringEpisode.timeUntilAiring * 1000)
         .format("[Next episode will air in] D [days], H [hours], m [minutes], s [seconds].") : "";
 
-      related = [];
+      let related = [];
       if (anime.info.relations)
-        for (let rel of anime.info.relations.filter(r => r.type == 'ANIME' && r.id != ""))
+        for (let rel of anime.info.relations.filter((r: { type: string; id: string; }) => r.type == 'ANIME' && r.id != ""))
           related.push({
             id: rel.id,
             title: Object.values(rel.title)[0] || "Title not found"
@@ -110,8 +112,8 @@ router.get("/:id", isAuth, async (req, res) => {
         epCode: eps,
         eps: JSON.stringify(anime.episodes),
         related: related || null,
-        username: req.user.username,
-        avatar: req.user.avatar,
+        username: req.user!.username,
+        avatar: req.user!.avatar,
         nextAir: nextAirString || "",
         uStatus: uStatus,
         totalAnimes: animeList.length,
