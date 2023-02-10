@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-db.then(async () => {
+db.init().then(async () => {
     console.log('Connected to MongoDB');
 }).catch((err: any) => {
     console.log(err);
@@ -47,3 +47,5 @@ app.listen(PORT, () => {
 });
 
 export default app;
+
+export { db };
