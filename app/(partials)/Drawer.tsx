@@ -10,6 +10,72 @@ import { RiCompassDiscoverFill, RiDashboardFill } from 'react-icons/ri';
 import { FiLogOut } from 'react-icons/fi';
 import { FaTv } from 'react-icons/fa';
 
+const Menu = {
+    Top: [
+        {
+            title: "Home",
+            type: "link",
+            href: "/home",
+            icon: <ImHome />
+        },
+        {
+            title: "Discover",
+            type: "link",
+            href: "/discover",
+            icon: <RiCompassDiscoverFill />
+        },
+        {
+            title: "Schedule",
+            type: "link",
+            href: "/schedule",
+            icon: <BsCalendarWeekFill />
+        },
+
+        {
+            title: "Profile",
+            type: "link",
+            href: "/user",
+            icon: <BsPersonFill />,
+            spacing: true
+        },
+        {
+            title: "Lists",
+            type: "link",
+            href: "/user",
+            icon: <BsListCheck />,
+            submenu: true,
+            submenuItems: [
+                {
+                    title: "Anime",
+                    type: "link",
+                    href: "/home",
+                    icon: <FaTv />,
+                },
+                {
+                    title: "Manga",
+                    type: "link",
+                    href: "/home",
+                    icon: <ImBook />,
+                },
+                {
+                    title: "Favorites",
+                    type: "link",
+                    href: "/home",
+                    icon: <BsBookmarkStarFill />,
+                },
+            ]
+        },
+    ],
+    Bottom: [
+        {
+            title: "Log In",
+            type: "link",
+            href: "/auth/login",
+            icon: <FiLogOut />
+        },
+    ]
+};
+
 // WHAT THE FUCK AM I DOING
 // OH LORD PLEASE HELP ME
 // OR I WILL MAKE WW2 LOOK LIKE A HOLIDAY
@@ -17,72 +83,6 @@ import { FaTv } from 'react-icons/fa';
 export default function Component() {
     const [open, setOpen] = useState(true);
     const [submenuOpen, setSubmenuOpen] = useState(false);
-    const Menu = {
-        Top: [
-            {
-                title: "Home",
-                type: "link",
-                href: "/home",
-                icon: <ImHome />
-            },
-            {
-                title: "Discover",
-                type: "link",
-                href: "/discover",
-                icon: <RiCompassDiscoverFill />
-            },
-            {
-                title: "Schedule",
-                type: "link",
-                href: "/schedule",
-                icon: <BsCalendarWeekFill />
-            },
-
-            {
-                title: "Profile",
-                type: "link",
-                href: "/user",
-                icon: <BsPersonFill />,
-                spacing: true
-            },
-            {
-                title: "Lists",
-                type: "link",
-                href: "/user",
-                icon: <BsListCheck />,
-                submenu: true,
-                submenuItems: [
-                    {
-                        title: "Anime",
-                        type: "link",
-                        href: "/home",
-                        icon: <FaTv />,
-                    },
-                    {
-                        title: "Manga",
-                        type: "link",
-                        href: "/home",
-                        icon: <ImBook />,
-                    },
-                    {
-                        title: "Favorites",
-                        type: "link",
-                        href: "/home",
-                        icon: <BsBookmarkStarFill />,
-                    },
-                ]
-            },
-        ],
-        Bottom: [
-            {
-                title: "Log In",
-                type: "link",
-                href: "/auth/login",
-                icon: <FiLogOut />
-            },
-        ]
-    };
-
     const router = useRouter()
 
     const handleClick = (e: any) => {
@@ -97,9 +97,15 @@ export default function Component() {
                 gridTemplateRows: "min-content min-content auto max-content"
             }} className={`grid bg-base-300 h-screen p-5 pt-8 ${open ? 'w-56' : 'w-20'
                 } duration-300 relative`}>
-                <TitleComponent title="MoeList" setOpen={setOpen} open={open} />
+                <TitleComponent
+                    title="MoeList"
+                    setOpen={setOpen}
+                    open={open}
+                />
 
-                <SearchComponent open={open} />
+                <SearchComponent
+                    open={open}
+                />
 
                 <div style={{
                     alignContent: "space-between"
@@ -107,7 +113,16 @@ export default function Component() {
                     <ul className='pt-2 flex flex-col h-max'>
                         {
                             Menu.Top.map((menu: any, index: any) => {
-                                return <MenuItemComponent key="key" index={index} menu={menu} click={handleClick} open={open} setOpen={setOpen} submenuOpen={submenuOpen} setSubmenuOpen={setSubmenuOpen} />
+                                return <MenuItemComponent
+                                    key="key"
+                                    index={index}
+                                    menu={menu}
+                                    click={handleClick}
+                                    open={open}
+                                    setOpen={setOpen}
+                                    submenuOpen={submenuOpen}
+                                    setSubmenuOpen={setSubmenuOpen}
+                                />
                             })
                         }
                     </ul>
