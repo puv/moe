@@ -2,7 +2,7 @@
 
 module.exports = {
   experimental: {
-    appDir: true,
+    // appDir: true,
     swcFileReading: true,
     swcMinify: true,
   },

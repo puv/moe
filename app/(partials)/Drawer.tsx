@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
+// import Link from 'next/link'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 import { AiFillSetting } from 'react-icons/ai';
 import { BsCalendarWeekFill, BsPersonFill, BsListCheck, BsChevronDown, BsBookmarkStarFill } from 'react-icons/bs';
@@ -15,52 +16,52 @@ const Menu = {
         {
             title: "Home",
             type: "link",
-            href: "/home",
+            to: "/home",
             icon: <ImHome />
         },
         {
             title: "Discover",
             type: "link",
-            href: "/discover",
+            to: "/discover",
             icon: <RiCompassDiscoverFill />
         },
         {
             title: "Schedule",
             type: "link",
-            href: "/schedule",
+            to: "/schedule",
             icon: <BsCalendarWeekFill />
         },
 
         {
             title: "Profile",
             type: "link",
-            href: "/user",
+            to: "/user",
             icon: <BsPersonFill />,
             spacing: true
         },
         {
             title: "Lists",
             type: "link",
-            href: "/user",
+            to: "/user",
             icon: <BsListCheck />,
             submenu: true,
             submenuItems: [
                 {
                     title: "Anime",
                     type: "link",
-                    href: "/home",
+                    to: "/home",
                     icon: <FaTv />,
                 },
                 {
                     title: "Manga",
                     type: "link",
-                    href: "/home",
+                    to: "/home",
                     icon: <ImBook />,
                 },
                 {
                     title: "Favorites",
                     type: "link",
-                    href: "/home",
+                    to: "/home",
                     icon: <BsBookmarkStarFill />,
                 },
             ]
@@ -70,7 +71,7 @@ const Menu = {
         {
             title: "Log In",
             type: "link",
-            href: "/auth/login",
+            to: "/auth/login",
             icon: <FiLogOut />
         },
     ]
@@ -142,7 +143,7 @@ export default function Component() {
 
 function AuthComponent() {
     return <div className="flex flex-col gap-y-2">
-        <Link href="/auth/register">
+        <Link to="/auth/register">
             Register
         </Link>
     </div>
@@ -187,7 +188,7 @@ function MenuItemComponent(props: any) {
                     <span className="text-xl block float-left">
                         {props.menu.icon ? props.menu.icon : <RiDashboardFill />}
                     </span>
-                    <Link href={props.menu.href ? props.menu.href : "#"} onClick={props.handleClick} >
+                    <Link to={props.menu.to ? props.menu.to : "#"} onClick={props.handleClick} >
                         <label>{props.menu.title}</label>
                     </Link>
                     {/* <a className={`text-sm font-medium flex-1 duration-200 ${!props.open && "hidden"}`}>
