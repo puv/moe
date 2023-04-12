@@ -91,7 +91,6 @@ export default function Component(props: any) {
     const handleClick = (e: any) => {
         e.preventDefault()
         console.log(e)
-        router.push('/your-page')
     }
 
     return (
