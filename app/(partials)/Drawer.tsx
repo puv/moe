@@ -81,11 +81,13 @@ const Menu = {
 // OH LORD PLEASE HELP ME
 // OR I WILL MAKE WW2 LOOK LIKE A HOLIDAY
 
-export default function Component() {
-    const [open, setOpen] = useState(true);
-    const [submenuOpen, setSubmenuOpen] = useState(false);
-    const router = useRouter()
+export default function Component(props: any) {
+    const open = props.open;
+    const setOpen = props.setOpen;
+    const submenuOpen = props.submenuOpen;
+    const setSubmenuOpen = props.setSubmenuOpen;
 
+    const router = useRouter()
     const handleClick = (e: any) => {
         e.preventDefault()
         console.log(e)
@@ -115,8 +117,6 @@ export default function Component() {
                         {
                             Menu.Top.map((menu: any, index: any) => {
                                 return <MenuItemComponent
-                                    key="key"
-                                    index={index}
                                     menu={menu}
                                     click={handleClick}
                                     open={open}
@@ -130,7 +130,7 @@ export default function Component() {
                     <ul className='flex flex-col h-max'>
                         {/* {
                             Menu.Bottom.map((menu: any, index: any) => {
-                                return <MenuItemComponent key="key" index={index} menu={menu} open={open} setOpen={setOpen} submenuOpen={submenuOpen} setSubmenuOpen={setSubmenuOpen} />
+                                return <MenuItemComponent menu={menu} open={open} setOpen={setOpen} submenuOpen={submenuOpen} setSubmenuOpen={setSubmenuOpen} />
                             })
                         } */}
                         <AuthComponent />
@@ -143,9 +143,9 @@ export default function Component() {
 
 function AuthComponent() {
     return <div className="flex flex-col gap-y-2">
-        <Link to="/auth/register">
+        {/* <Link to="/auth/register">
             Register
-        </Link>
+        </Link> */}
     </div>
 }
 
@@ -174,7 +174,7 @@ function SearchComponent(props: any) {
     return <div style={{
         gridTemplateColumns: props.open ? "min-content min-content" : "min-content",
         height: 40 + "px"
-    }} className={`grid items-center gap-x-4 rounded-md bg-base-100 mt-6 py-2 px-2`}>
+    }} className={`grid items-center gap-x-4 rounded-md bg-base-100 mt-6 py-2 px-2 ${!props.open && "w-min"}`}>
         <ImSearch className={`text-white text-xl block float-left cursor-pointer`} />
         <input type={"search"} placeholder='Search' style={{ width: 83 + "%" }} className={`text-base bg-transparent text-white focus:outline-none ${!props.open && "hidden"}`}></input>
     </div>
@@ -184,11 +184,11 @@ function MenuItemComponent(props: any) {
     switch (props.menu.type) {
         case 'link':
             return <>
-                <li key={props.key} className={`text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${props.menu.spacing ? "mt-9" : "mt-2"}`}>
+                <li key={Math.random().toString(36).substring(2)} className={`text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${props.menu.spacing ? "mt-9" : "mt-2"}`}>
                     <span className="text-xl block float-left">
                         {props.menu.icon ? props.menu.icon : <RiDashboardFill />}
                     </span>
-                    <Link to={props.menu.to ? props.menu.to : "#"} onClick={props.handleClick} >
+                    <Link className={`${!props.open && "hidden"}`} to={props.menu.to ? props.menu.to : "#"} onClick={props.handleClick} >
                         <label>{props.menu.title}</label>
                     </Link>
                     {/* <a className={`text-sm font-medium flex-1 duration-200 ${!props.open && "hidden"}`}>
@@ -201,9 +201,9 @@ function MenuItemComponent(props: any) {
                 </li>
 
                 {props.menu.submenu && props.submenuOpen && props.open && (
-                    <ul className='px-5'>
+                    <ul key={Math.random().toString(36).substring(2)} className='px-5'>
                         {props.menu.submenuItems.map((submenuItem: any, index: any) => {
-                            return <MenuItemComponent key="key" index={index} menu={submenuItem} open={props.open} setOpen={props.setOpen} submenuOpen={props.submenuOpen} setSubmenuOpen={props.setSubmenuOpen} />
+                            return <MenuItemComponent menu={submenuItem} open={props.open} setOpen={props.setOpen} submenuOpen={props.submenuOpen} setSubmenuOpen={props.setSubmenuOpen} />
                         })}
                     </ul>
                 )}
@@ -216,19 +216,4 @@ function MenuItemComponent(props: any) {
 
 function UserComponent() {
     return <label></label>
-}
-
-function SubMenuComponent(props: any) {
-    return <ul>
-        {props.menu.submenuItems.map((submenuItem: any, index: any) => {
-            return <li key={index} className={`text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 px-5 hover:bg-light-white rounded-md ${submenuItem.spacing ? "mt-9" : "mt-2"}`}>
-                <span className="text-2xl block float-left">
-                    {submenuItem.icon ? submenuItem.icon : <RiDashboardFill />}
-                </span>
-                <a className={`text-base font-medium flex-1 duration-200`}>
-                    {submenuItem.title}
-                </a>
-            </li>
-        })}
-    </ul>
 }

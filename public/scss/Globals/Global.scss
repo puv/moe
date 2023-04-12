@@ -13,3 +13,11 @@ body {
 .bg-base-300 {
     background-color: hsl(var(--b3));
 }
+
+#NotificationArea {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    height: 16em;
+    width: 16em
+}

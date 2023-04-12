@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":["../../scss/Globals/Global.scss"],"names":[],"mappings":"AAAQ;AAER;AACA;AACA;AAEA;AAAA;EAEI;EACA;;;AAGJ;EACI","file":"Global.css"}
+{"version":3,"sourceRoot":"","sources":["../../scss/Globals/Global.scss"],"names":[],"mappings":"AAAQ;AAER;AACA;AACA;AAEA;AAAA;EAEI;EACA;;;AAGJ;EACI;;;AAGJ;EACI;EACA;EACA;EACA;EACA","file":"Global.css"}
