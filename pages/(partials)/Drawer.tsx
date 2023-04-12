@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
 // import Link from 'next/link'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import { AiFillSetting } from 'react-icons/ai';
 import { BsCalendarWeekFill, BsPersonFill, BsListCheck, BsChevronDown, BsBookmarkStarFill } from 'react-icons/bs';
@@ -71,7 +71,7 @@ const Menu = {
         {
             title: "Log In",
             type: "link",
-            to: "/auth/login",
+            to: "/auth",
             icon: <FiLogOut />
         },
     ]
@@ -127,12 +127,12 @@ export default function Component(props: any) {
                         }
                     </ul>
                     <ul className='flex flex-col h-max'>
-                        {/* {
+                        {
                             Menu.Bottom.map((menu: any, index: any) => {
                                 return <MenuItemComponent menu={menu} open={open} setOpen={setOpen} submenuOpen={submenuOpen} setSubmenuOpen={setSubmenuOpen} />
                             })
-                        } */}
-                        <AuthComponent />
+                        }
+                        {/* <AuthComponent /> */}
                     </ul>
                 </div>
             </div>
@@ -171,7 +171,7 @@ function CollapseComponent(props: any) {
 
 function SearchComponent(props: any) {
     return <div style={{
-        gridTemplateColumns: props.open ? "min-content min-content" : "min-content",
+        gridTemplateColumns: props.open ? "min-content auto" : "min-content",
         height: 40 + "px"
     }} className={`grid items-center gap-x-4 rounded-md bg-base-100 mt-6 py-2 px-2 ${!props.open && "w-min"}`}>
         <ImSearch className={`text-white text-xl block float-left cursor-pointer`} />
@@ -183,19 +183,21 @@ function MenuItemComponent(props: any) {
     switch (props.menu.type) {
         case 'link':
             return <>
-                <li key={Math.random().toString(36).substring(2)} className={`text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${props.menu.spacing ? "mt-9" : "mt-2"}`}>
-                    <span className="text-xl block float-left">
-                        {props.menu.icon ? props.menu.icon : <RiDashboardFill />}
-                    </span>
-                    <Link className={`${!props.open && "hidden"}`} to={props.menu.to ? props.menu.to : "#"} onClick={props.handleClick} >
-                        <label>{props.menu.title}</label>
+                <li key={Math.random().toString(36).substring(2)} style={{
+                    justifyContent: "space-between",
+                }} className={`text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-base-100 duration-300 rounded-md ${props.menu.spacing ? "mt-9" : "mt-2"}`}>
+                    <Link className={`${!props.open && "hidden"} flex items-center gap-x-4 cursor-pointer`} to={props.menu.to ? props.menu.to : "#"} onClick={props.handleClick} >
+                        <span className="text-xl block float-left cursor-pointer">
+                            {props.menu.icon ? props.menu.icon : <RiDashboardFill />}
+                        </span>
+                        <label className={`cursor-pointer`}>{props.menu.title}</label>
                     </Link>
                     {/* <a className={`text-sm font-medium flex-1 duration-200 ${!props.open && "hidden"}`}>
                 {props.menu.title}
             </a> */}
 
                     {props.menu.submenu && props.open && (
-                        <BsChevronDown className={`${props.submenuOpen && "rotate-180"}`} onClick={() => props.setSubmenuOpen(!props.submenuOpen)} />
+                        <BsChevronDown className={`${props.submenuOpen && "rotate-180"} cursor-pointer`} onClick={() => props.setSubmenuOpen(!props.submenuOpen)} />
                     )}
                 </li>
 
