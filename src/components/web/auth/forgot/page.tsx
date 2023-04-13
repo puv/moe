@@ -1,6 +1,6 @@
-import { AuthInput, AuthOther } from '@/src/components/Auth'
-import { Button } from '@/src/components/Button'
-import Auth from '@/src/components/partials/Auth'
+import { AuthInput, AuthOther } from '@/components/Auth'
+import { Button } from '@/components/Button'
+import Auth from '@/components/partials/Auth'
 
 export default function Component() {
     return (

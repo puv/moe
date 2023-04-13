@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 65510",
-    "css": "npx sass --watch public/scss:public/css --quiet-deps",
-    "build": "npx sass public/scss:public/css && next build",
+    "css": "npx sass --watch src/public/scss:src/public/css --quiet-deps",
+    "build": "npx sass src/public/scss:src/public/css && next build",
     "start": "next start",
     "lint": "next lint"
   },

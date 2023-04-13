@@ -1,5 +1,5 @@
-import { AuthInput, RememberMe, AuthOther } from '@/src/components/Auth'
-import { Button } from '@/src/components/Button'
+import { AuthInput, RememberMe, AuthOther } from '@/components/Auth'
+import { Button } from '@/components/Button'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 export default function Component({
