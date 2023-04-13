@@ -1,9 +1,9 @@
-import {AppProps} from 'next/app';
-import {useEffect, useState} from 'react';
+import { AppProps } from 'next/app';
+import { useEffect, useState } from 'react';
 
-import '../public/css/Style.css'
+import '@/public/css/Style.css'
 
-function App({Component, pageProps}: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   const [isServer, setIsServer] = useState(true);
   useEffect(() => {
     setIsServer(false);

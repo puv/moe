@@ -1,5 +1,5 @@
-import { TwoFactorAuth } from '@/pages/components/Auth'
-import Auth from '@/pages/components/partials/Auth'
+import { TwoFactorAuth } from '@/src/pages/components/Auth'
+import Auth from '@/src/pages/components/partials/Auth'
 
 export default function Component() {
     return (
