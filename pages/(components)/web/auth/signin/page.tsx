@@ -1,7 +1,7 @@
 import { AuthInput, RememberMe, AuthOther } from '@/pages/(components)/Auth'
 import { Button } from '@/pages/(components)/Button'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Auth from '@/pages/(partials)/Auth';
+import Auth from '@/pages/(components)/partials/Auth';
 
 export default function Component() {
     return (
@@ -12,7 +12,7 @@ export default function Component() {
                 <RememberMe />
                 <Link to="/auth/forgot" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</Link>
             </div>
-            <Button size="lg" className="w-full" variant="outline" type="submit">Sign In</Button>
+            <Button size="lg" className="w-full" variant="outline" type="submit"> Sign In </Button>
             <AuthOther text="Don't have an account?" to="/auth/signup" toText="Sign up" />
         </Auth>
     );

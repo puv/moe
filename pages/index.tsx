@@ -26,7 +26,7 @@ export default function Application() {
         setSubmenuOpen={setSubmenuOpen}
       />
       <main className={`${!open && "ml-20"} ${open && "ml-56"} duration-300`}>
-        <section className='px-5 h-screen bg-base-100'>
+        <section className='px-5 min-h-[100vh] grid bg-base-100'>
           <Switch>
             <Route exact path="/">
               <Home />

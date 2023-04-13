@@ -30,13 +30,13 @@ export function AuthOther(props: any) {
 
 export function TwoFactorAuth() {
     return (
-        <div className="flex flex-col items-center justify-center w-full h-full">
-            <input type="tel" name="pincode-1" maxLength={1} pattern="[\d]*" tabIndex={1} placeholder="" autoComplete="off" />
-            <input type="tel" name="pincode-1" maxLength={1} pattern="[\d]*" tabIndex={2} placeholder="" autoComplete="off" />
-            <input type="tel" name="pincode-1" maxLength={1} pattern="[\d]*" tabIndex={3} placeholder="" autoComplete="off" />
-            <input type="tel" name="pincode-1" maxLength={1} pattern="[\d]*" tabIndex={4} placeholder="" autoComplete="off" />
-            <input type="tel" name="pincode-1" maxLength={1} pattern="[\d]*" tabIndex={5} placeholder="" autoComplete="off" />
-            <input type="tel" name="pincode-1" maxLength={1} pattern="[\d]*" tabIndex={6} placeholder="" autoComplete="off" />
+        <div id="otp" className="text-center px-2 mt-5 flex flex-row items-center justify-center w-full h-full">
+            <input className="m-2 border-b outline-0 h-10 w-10 text-center form-control rounded" type="tel" name="code-1" maxLength={1} pattern="[\d]*" tabIndex={1} placeholder="" autoComplete="off" />
+            <input className="m-2 border-b outline-0 h-10 w-10 text-center form-control rounded" type="tel" name="code-2" maxLength={1} pattern="[\d]*" tabIndex={2} placeholder="" autoComplete="off" />
+            <input className="m-2 border-b outline-0 h-10 w-10 text-center form-control rounded" type="tel" name="code-3" maxLength={1} pattern="[\d]*" tabIndex={3} placeholder="" autoComplete="off" />
+            <input className="m-2 border-b outline-0 h-10 w-10 text-center form-control rounded" type="tel" name="code-4" maxLength={1} pattern="[\d]*" tabIndex={4} placeholder="" autoComplete="off" />
+            <input className="m-2 border-b outline-0 h-10 w-10 text-center form-control rounded" type="tel" name="code-5" maxLength={1} pattern="[\d]*" tabIndex={5} placeholder="" autoComplete="off" />
+            <input className="m-2 border-b outline-0 h-10 w-10 text-center form-control rounded" type="tel" name="code-6" maxLength={1} pattern="[\d]*" tabIndex={6} placeholder="" autoComplete="off" />
         </div>
     )
 }
