@@ -4,12 +4,12 @@ import NextLink from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
 
-import Drawer from './(partials)/Drawer';
-import Footer from './(partials)/Footer';
-import Notifications from './(partials)/Notifications';
-import Auth from './(web)/auth/index';
+import Drawer from './components/partials/Drawer';
+import Footer from './components/partials/Footer';
+import Notifications from './components/partials/Notifications';
+import Auth from './components/web/auth/index';
 
-import Home from './(web)/(others)/Home';
+import Home from './components/web/others/Home';
 // import User from './(web)/user/[username]/page';
 
 
