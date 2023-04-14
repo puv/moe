@@ -1,12 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import SignIn from './signin/page';
 import SignUp from './signup/page';
 import Forgot from './forgot/page';
 import TwoFactor from './2fa/page';
 
-export default function Component() {
+
+export default function AuthPageComponent() {
     return (
         <div className="h-full grid place-content-center">
             <Router>

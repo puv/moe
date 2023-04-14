@@ -12,10 +12,23 @@ import Auth from '@/components/web/auth/index';
 import Home from '@/components/web/others/Home';
 // import User from './(web)/user/[username]/page';
 
+import Database from '@/database/db';
+
+async function getServerSideProps() {
+  // const db = new Database();
+
+  Database();
+  
+  return {
+    props: {},
+  };
+}
 
 export default function Application() {
   const [open, setOpen] = useState(true);
   const [submenuOpen, setSubmenuOpen] = useState(false);
+
+  // getServerSideProps();
 
   return (
     <Router>

@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation'
 // import Link from 'next/link'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { useSession, signOut, signIn } from 'next-auth/react';
+
 
 import { AiFillSetting } from 'react-icons/ai';
 import { BsCalendarWeekFill, BsPersonFill, BsListCheck, BsChevronDown, BsBookmarkStarFill } from 'react-icons/bs';
@@ -81,7 +83,7 @@ const Menu = {
 // OH LORD PLEASE HELP ME
 // OR I WILL MAKE WW2 LOOK LIKE A HOLIDAY
 
-export default function Component(props: any) {
+export default function DrawerComponent(props: any) {
     const open = props.open;
     const setOpen = props.setOpen;
     const submenuOpen = props.submenuOpen;
@@ -116,6 +118,7 @@ export default function Component(props: any) {
                         {
                             Menu.Top.map((menu: any, index: any) => {
                                 return <MenuItemComponent
+                                    key={Math.random().toString(36).substring(2)}
                                     menu={menu}
                                     click={handleClick}
                                     open={open}
@@ -129,10 +132,9 @@ export default function Component(props: any) {
                     <ul className='flex flex-col h-max'>
                         {
                             Menu.Bottom.map((menu: any, index: any) => {
-                                return <MenuItemComponent menu={menu} open={open} setOpen={setOpen} submenuOpen={submenuOpen} setSubmenuOpen={setSubmenuOpen} />
+                                return <MenuItemComponent key={Math.random().toString(36).substring(2)} menu={menu} open={open} setOpen={setOpen} submenuOpen={submenuOpen} setSubmenuOpen={setSubmenuOpen} />
                             })
                         }
-                        {/* <AuthComponent /> */}
                     </ul>
                 </div>
             </div>
@@ -180,39 +182,30 @@ function SearchComponent(props: any) {
 }
 
 function MenuItemComponent(props: any) {
-    switch (props.menu.type) {
-        case 'link':
-            return <>
-                <li key={Math.random().toString(36).substring(2)} style={{
-                    justifyContent: "space-between",
-                }} className={`text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-base-100 duration-300 rounded-md ${props.menu.spacing ? "mt-9" : "mt-2"}`}>
-                    <Link className={`${!props.open && "hidden"} flex items-center gap-x-4 cursor-pointer`} to={props.menu.to ? props.menu.to : "#"} onClick={props.handleClick} >
-                        <span className="text-xl block float-left cursor-pointer">
-                            {props.menu.icon ? props.menu.icon : <RiDashboardFill />}
-                        </span>
-                        <label className={`cursor-pointer`}>{props.menu.title}</label>
-                    </Link>
-                    {/* <a className={`text-sm font-medium flex-1 duration-200 ${!props.open && "hidden"}`}>
-                {props.menu.title}
-            </a> */}
+    return <>
+        <li style={{
+            justifyContent: "space-between",
+        }} className={`text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-base-100 duration-300 rounded-md ${props.menu.spacing ? "mt-9" : "mt-2"}`}>
+            <Link className={`${!props.open && "hidden"} flex items-center gap-x-4 cursor-pointer`} to={props.menu.to ? props.menu.to : "#"} onClick={props.handleClick} >
+                <span className="text-xl block float-left cursor-pointer">
+                    {props.menu.icon ? props.menu.icon : <RiDashboardFill />}
+                </span>
+                <label className={`cursor-pointer`}>{props.menu.title}</label>
+            </Link>
 
-                    {props.menu.submenu && props.open && (
-                        <BsChevronDown className={`${props.submenuOpen && "rotate-180"} cursor-pointer`} onClick={() => props.setSubmenuOpen(!props.submenuOpen)} />
-                    )}
-                </li>
+            {props.menu.submenu && props.open && (
+                <BsChevronDown className={`${props.submenuOpen && "rotate-180"} cursor-pointer`} onClick={() => props.setSubmenuOpen(!props.submenuOpen)} />
+            )}
+        </li>
 
-                {props.menu.submenu && props.submenuOpen && props.open && (
-                    <ul key={Math.random().toString(36).substring(2)} className='px-5'>
-                        {props.menu.submenuItems.map((submenuItem: any, index: any) => {
-                            return <MenuItemComponent menu={submenuItem} open={props.open} setOpen={props.setOpen} submenuOpen={props.submenuOpen} setSubmenuOpen={props.setSubmenuOpen} />
-                        })}
-                    </ul>
-                )}
-            </>
-        default:
-            return <UserComponent />
-    }
-
+        {props.menu.submenu && props.submenuOpen && props.open && (
+            <ul className='px-5'>
+                {props.menu.submenuItems.map((submenuItem: any, index: any) => {
+                    return <MenuItemComponent menu={submenuItem} open={props.open} setOpen={props.setOpen} submenuOpen={props.submenuOpen} setSubmenuOpen={props.setSubmenuOpen} />
+                })}
+            </ul>
+        )}
+    </>
 }
 
 function UserComponent() {
