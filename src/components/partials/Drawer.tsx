@@ -10,7 +10,7 @@ import { AiFillSetting } from 'react-icons/ai';
 import { BsCalendarWeekFill, BsPersonFill, BsListCheck, BsChevronDown, BsBookmarkStarFill } from 'react-icons/bs';
 import { ImHome, ImSearch, ImBook } from 'react-icons/im';
 import { RiCompassDiscoverFill, RiDashboardFill } from 'react-icons/ri';
-import { FiLogOut } from 'react-icons/fi';
+import { BiLogOut, BiLogIn } from 'react-icons/bi';
 import { FaTv } from 'react-icons/fa';
 
 const Menu = {
@@ -74,26 +74,22 @@ const Menu = {
             title: "Log In",
             type: "link",
             to: "/auth",
-            icon: <FiLogOut />
+            icon: <BiLogIn />
         },
     ]
 };
 
-// WHAT THE FUCK AM I DOING
-// OH LORD PLEASE HELP ME
-// OR I WILL MAKE WW2 LOOK LIKE A HOLIDAY
+const handleClick = (e: any) => {
+    e.preventDefault()
+    console.log(e)
+}
 
 export default function DrawerComponent(props: any) {
     const open = props.open;
     const setOpen = props.setOpen;
     const submenuOpen = props.submenuOpen;
     const setSubmenuOpen = props.setSubmenuOpen;
-
-    const router = useRouter()
-    const handleClick = (e: any) => {
-        e.preventDefault()
-        console.log(e)
-    }
+    const { data: sessionData, status: sessionStatus } = useSession()
 
     return (
         <div id="drawer" className='flex fixed h-screen'>
@@ -131,9 +127,11 @@ export default function DrawerComponent(props: any) {
                     </ul>
                     <ul className='flex flex-col h-max'>
                         {
-                            Menu.Bottom.map((menu: any, index: any) => {
-                                return <MenuItemComponent key={Math.random().toString(36).substring(2)} menu={menu} open={open} setOpen={setOpen} submenuOpen={submenuOpen} setSubmenuOpen={setSubmenuOpen} />
-                            })
+                            sessionStatus === "authenticated" ?
+                                <UserAuthenticatedComponent data={sessionData} /> :
+                                Menu.Bottom.map((menu: any, index: any) => {
+                                    return <MenuItemComponent key={Math.random().toString(36).substring(2)} menu={menu} open={open} setOpen={setOpen} submenuOpen={submenuOpen} setSubmenuOpen={setSubmenuOpen} />
+                                })
                         }
                     </ul>
                 </div>
@@ -142,12 +140,30 @@ export default function DrawerComponent(props: any) {
     );
 }
 
-function AuthComponent() {
-    return <div className="flex flex-col gap-y-2">
-        {/* <Link to="/auth/register">
-            Register
-        </Link> */}
-    </div>
+function UserAuthenticatedComponent({ data }: { data: any }) {
+    return <>
+        <li style={{
+            gridTemplateColumns: "auto min-content min-content",
+        }} className={`text-gray-300 text-base grid items-center gap-x-2 cursor-pointer p-2 hover:bg-base-100 duration-300 rounded-md mt-2`}>
+            <Link className={`flex items-center gap-x-2 cursor-pointer`} to={`/user/${data.user.name}`} onClick={handleClick} >
+                <img src={data.user.image} className="block h-8 w-8 rounded-full float-left cursor-pointer"></img>
+                <label className={`cursor-pointer`}>{data.user.name}</label>
+            </Link>
+
+            <Link className={`flex items-center cursor-pointer`} to={`/settings`} onClick={handleClick} >
+                <span className="text-xl block float-left cursor-pointer">
+                    <AiFillSetting />
+                </span>
+            </Link>
+
+            <Link className={`flex items-center cursor-pointer`} to={`/auth/signout`} onClick={handleClick} >
+                <span className="text-xl block float-left cursor-pointer">
+                    <BiLogOut />
+                </span>
+            </Link>
+
+        </li>
+    </>
 }
 
 function TitleComponent(props: any) {

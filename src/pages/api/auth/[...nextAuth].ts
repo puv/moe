@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 import User from "@/database/models/User";
 import dbConnect from "@/lib/dbConnect";
+import bcrypt from 'bcrypt'
 
 export default NextAuth({
     session: {
@@ -16,42 +17,31 @@ export default NextAuth({
                 password: { label: "Password", type: "password" }
             },
             authorize: async (credentials) => {
-                // console.log("> Connecting to database...")
-
                 dbConnect()
 
-                // console.log("Authenticating user...")
-
-                const user = await User.findOne({ email: credentials!.email }).select('+password')
-
+                const user = await User.findOne({ 'private.email': credentials!.email }).select("+private.password")
                 if (!user) { throw new Error('No user with a matching email was found.') }
 
-                // console.log("User found, checking password...")
-
-                const pwValid = await user.comparePassword(credentials!.password)
-
+                const pwValid = await bcrypt.compare(credentials!.password, user.private.password)
                 if (!pwValid) { throw new Error("Your password is invalid") }
-
-                // console.log("Password valid, returning user...")
 
                 return user
             }
         })
     ],
     callbacks: {
-        async jwt({ token, user }) {
+        async jwt({ token, user }: { token: any, user: any }) {
             if (user) {
                 token.user = {
                     id: user.id,
-                    email: user.email,
-                    name: user.name,
-                    image: user.image,
+                    email: user.private.email,
+                    name: user.public.username,
+                    image: user.public.image,
                 }
             }
             return token
         },
         session: async ({ session, token }: { session: any; token: any }) => {
-            // console.log(session, token);
             if (token) {
                 session.user = token.user;
             }
@@ -61,5 +51,6 @@ export default NextAuth({
     pages: {
         signIn: '/auth/signin',
         signOut: '/auth/signout',
+        error: '/'
     },
 })

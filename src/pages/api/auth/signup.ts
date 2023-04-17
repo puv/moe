@@ -1,7 +1,7 @@
 import User from '@/database/models/User';
 import dbConnect from '@/lib/dbConnect';
 import handler from '@/lib/handler';
-
+import bcrypt from 'bcrypt'
 
 handler.post(createUser)
 
@@ -22,7 +22,7 @@ async function createUser(req: any, res: any) {
         },
         private: {
             email: email,
-            password: password,
+            password: await bcrypt.hash(password, 10),
         },
     });
 

@@ -13,10 +13,7 @@ let cached: any = {
 }
 
 async function dbConnect() {
-    console.log("Connecting to database...");
-
     if (cached.conn) {
-        console.log("Using cached connection");
         return cached.conn
     }
 
@@ -25,19 +22,7 @@ async function dbConnect() {
             return mongoose
         })
     }
-    console.log("Waiting for connection...");
     cached.conn = await cached.promise
-
-    console.log("Connected to database");
-
-    // delete cached.conn.models["Staff"]
-    // delete cached.conn.models["Anime"]
-    // delete cached.conn.models["Manga"]
-    // delete cached.conn.models["Character"]
-    // delete cached.conn.models["User"]
-    // delete cached.conn.models["Post"]
-
-    // console.log("Deleted models");
 
     return cached.conn
 }
