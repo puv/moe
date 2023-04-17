@@ -17,8 +17,6 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         {typeof window === 'undefined' ? null : <Component {...pageProps} />}
       </div>
     </SessionProvider>
-
   );
-  // This literally works why do I get error?
 }
 export default App;

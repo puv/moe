@@ -3,9 +3,11 @@ import { Button } from '@/components/Button'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 export default function Component({
+    onSubmit,
     title,
     children,
 }: {
+    onSubmit: (event: any) => void,
     title: string,
     children: React.ReactNode
 }) {
@@ -15,7 +17,7 @@ export default function Component({
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                     {title}
                 </h1>
-                <form className="space-y-4 md:space-y-6" action="#">
+                <form className="space-y-4 md:space-y-6" onSubmit={onSubmit} action="#">
                     {children}
                 </form>
             </div>

@@ -12,17 +12,17 @@ import Auth from '@/components/web/auth/index';
 import Home from '@/components/web/others/Home';
 // import User from './(web)/user/[username]/page';
 
-import Database from '@/database/db';
+// import Database from '@/database/db';
 
-async function getServerSideProps() {
-  // const db = new Database();
+// async function getServerSideProps() {
+//   // const db = new Database();
 
-  Database();
-  
-  return {
-    props: {},
-  };
-}
+//   Database();
+
+//   return {
+//     props: {},
+//   };
+// }
 
 export default function Application() {
   const [open, setOpen] = useState(true);

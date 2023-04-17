@@ -29,8 +29,8 @@ export default function SignInPageComponent() {
     async function submitHandler(event: any) {
         event.preventDefault();
 
-        const enteredEmail: string = emailInputRef.current!.value;
-        const enteredPassword: string = passwordInputRef.current!.value;
+        const enteredEmail: string = emailInputRef.current!['value'];
+        const enteredPassword: string = passwordInputRef.current!['value'];
 
         await signIn('credentials', {
             redirect: true,
@@ -40,7 +40,7 @@ export default function SignInPageComponent() {
     }
 
     return (
-        <Auth title="Sign in to your account">
+        <Auth onSubmit={submitHandler} title="Sign in to your account">
             <AuthInput type="email" wref={emailInputRef} name="email" text="Email" placeholder="email@example.com" match="" />
             <AuthInput type="password" wref={passwordInputRef} name="password" text="Password" placeholder="********" match="" />
             <div className="flex items-center justify-between">

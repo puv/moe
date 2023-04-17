@@ -10,10 +10,18 @@ module.exports = {
   async rewrites() {
     return [
       // Rewrite everything else to use `pages/index`
+      // {
+      //   source: '/api/:path*',
+      //   destination: '/api/:path*',
+      // },
       {
-        source: '/:path*',
+        source: '/(^(?!api).*$)/:path*',
         destination: '/',
       },
+      // {
+      //   source: '/:path*',
+      //   destination: '/',
+      // }
     ];
   },
   // webpack: (config) => {

@@ -13,7 +13,18 @@ async function createUser(req: any, res: any) {
 
     dbConnect();
 
-    const user = await User.create(req.body)
+    const Id = (await User.countDocuments()) + 1;
+
+    const user = await User.create({
+        id: Id,
+        public: {
+            username: username,
+        },
+        private: {
+            email: email,
+            password: password,
+        },
+    });
 
     res.status(201).json({ message: 'Created user!' });
 

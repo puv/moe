@@ -23,6 +23,7 @@
     "eslint-config-next": "13.3.0",
     "mongodb": "^5.2.0",
     "mongoose": "^7.0.3",
+    "mongoose-sequence": "^5.3.1",
     "next": "13.3.0",
     "next-auth": "^4.22.0",
     "next-connect": "^0.13.0",
@@ -40,6 +41,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/mongoose": "^5.11.97",
+    "@types/mongoose-sequence": "^3.0.7",
     "@types/react-router-dom": "^5.3.3",
     "@types/validator": "^13.7.15",
     "@typescript-eslint/eslint-plugin": "^5.58.0",
