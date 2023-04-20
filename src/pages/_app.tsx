@@ -1,6 +1,7 @@
 import { AppProps } from 'next/app';
 import { ReactNode, useEffect, useState } from 'react';
 import { SessionProvider } from 'next-auth/react';
+import Application from '@/pages/index'
 
 import '@/public/css/Style.css'
 
@@ -13,9 +14,10 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
   return (
     <SessionProvider session={session}>
-      <div suppressHydrationWarning>
+      <Application />
+      {/* <div suppressHydrationWarning>
         {typeof window === 'undefined' ? null : <Component {...pageProps} />}
-      </div>
+      </div> */}
     </SessionProvider>
   );
 }

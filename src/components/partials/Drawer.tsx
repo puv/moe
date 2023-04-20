@@ -128,10 +128,8 @@ export default function DrawerComponent(props: any) {
                     <ul className='flex flex-col h-max'>
                         {
                             sessionStatus === "authenticated" ?
-                                <UserAuthenticatedComponent data={sessionData} /> :
-                                Menu.Bottom.map((menu: any, index: any) => {
-                                    return <MenuItemComponent key={Math.random().toString(36).substring(2)} menu={menu} open={open} setOpen={setOpen} submenuOpen={submenuOpen} setSubmenuOpen={setSubmenuOpen} />
-                                })
+                                <UserAuthComponent session={sessionData} /> :
+                                <UserAuthComponent />
                         }
                     </ul>
                 </div>
@@ -140,27 +138,39 @@ export default function DrawerComponent(props: any) {
     );
 }
 
-function UserAuthenticatedComponent({ data }: { data: any }) {
+function UserAuthComponent(props: any) {
     return <>
         <li style={{
             gridTemplateColumns: "auto min-content min-content",
         }} className={`text-gray-300 text-base grid items-center gap-x-2 cursor-pointer p-2 hover:bg-base-100 duration-300 rounded-md mt-2`}>
-            <Link className={`flex items-center gap-x-2 cursor-pointer`} to={`/user/${data.user.name}`} onClick={handleClick} >
-                <img src={data.user.image} className="block h-8 w-8 rounded-full float-left cursor-pointer"></img>
-                <label className={`cursor-pointer`}>{data.user.name}</label>
-            </Link>
+            {
+                props.session ?
+                    <>
+                        <Link className={`flex items-center gap-x-2 cursor-pointer`} to={`/user/${props.session.data.user.name}`} onClick={handleClick} >
+                            <img src={props.session.data.user.image} className="block h-8 w-8 rounded-full float-left cursor-pointer"></img>
+                            <label className={`cursor-pointer`}>{props.session.data.user.name}</label>
+                        </Link>
 
-            <Link className={`flex items-center cursor-pointer`} to={`/settings`} onClick={handleClick} >
-                <span className="text-xl block float-left cursor-pointer">
-                    <AiFillSetting />
-                </span>
-            </Link>
+                        <Link className={`flex items-center cursor-pointer`} to={`/settings`} onClick={handleClick} >
+                            <span className="text-xl block float-left cursor-pointer">
+                                <AiFillSetting />
+                            </span>
+                        </Link>
 
-            <Link className={`flex items-center cursor-pointer`} to={`/auth/signout`} onClick={handleClick} >
-                <span className="text-xl block float-left cursor-pointer">
-                    <BiLogOut />
-                </span>
-            </Link>
+                        <Link className={`flex items-center cursor-pointer`} to={`/auth/signout`} onClick={handleClick} >
+                            <span className="text-xl block float-left cursor-pointer">
+                                <BiLogOut />
+                            </span>
+                        </Link>
+                    </> : <>
+                        <Link className={`flex items-center gap-x-2 cursor-pointer`} to={`/auth/signin`} onClick={handleClick} >
+                            <span className="text-xl grid content-center h-8 w-8 block float-left cursor-pointer">
+                                <BiLogIn />
+                            </span>
+                            <label className={`cursor-pointer`}>Sign In</label>
+                        </Link>
+                    </>
+            }
 
         </li>
     </>
