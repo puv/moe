@@ -8,27 +8,12 @@ import Drawer from '@/components/partials/Drawer';
 import Footer from '@/components/partials/Footer';
 import Notifications from '@/components/partials/Notifications';
 import Auth from '@/components/web/auth/index';
-
 import Home from '@/components/web/others/Home';
-// import User from './(web)/user/[username]/page';
-
-// import Database from '@/database/db';
-
-// async function getServerSideProps() {
-//   // const db = new Database();
-
-//   Database();
-
-//   return {
-//     props: {},
-//   };
-// }
+import Error from '@/components/web/others/Error'
 
 export default function Application() {
   const [open, setOpen] = useState(true);
   const [submenuOpen, setSubmenuOpen] = useState(false);
-
-  // getServerSideProps();
 
   return (
     <Router>
@@ -49,6 +34,9 @@ export default function Application() {
             </Route>
             <Route path="/auth">
               <Auth />
+            </Route>
+            <Route path="/404">
+              <Error />
             </Route>
           </Switch>
         </section>
