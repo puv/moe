@@ -32,6 +32,7 @@ export default NextAuth({
     callbacks: {
         async jwt({ token, user }: { token: any, user: any }) {
             if (user) {
+                console.log(user.public.image)
                 token.user = {
                     id: user.id,
                     email: user.private.email,

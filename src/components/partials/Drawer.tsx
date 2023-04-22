@@ -81,7 +81,6 @@ const Menu = {
 
 const handleClick = (e: any) => {
     e.preventDefault()
-    console.log(e)
 }
 
 export default function DrawerComponent(props: any) {
@@ -89,13 +88,12 @@ export default function DrawerComponent(props: any) {
     const setOpen = props.setOpen;
     const submenuOpen = props.submenuOpen;
     const setSubmenuOpen = props.setSubmenuOpen;
-    const { data: sessionData, status: sessionStatus } = useSession()
 
     return (
-        <div id="drawer" className='flex fixed h-screen'>
+        <div id="drawer" className='flex z-10 fixed h-screen'>
             <div style={{
                 gridTemplateRows: "min-content min-content auto max-content"
-            }} className={`grid bg-base-300 h-screen p-5 pt-8 ${open ? 'w-56' : 'w-20'
+            }} className={`grid bg-base-300 gap-y-5 h-screen pt-8 ${open ? 'w-56' : 'w-20'
                 } duration-300 relative`}>
                 <TitleComponent
                     title="MoeList"
@@ -103,20 +101,22 @@ export default function DrawerComponent(props: any) {
                     open={open}
                 />
 
-                <SearchComponent
-                    open={open}
-                />
+                <div className="px-5">
+                    <SearchComponent
+                        open={open}
+                    />
+                </div>
+
 
                 <div style={{
                     alignContent: "space-between"
                 }} className="grid space-between h-auto">
-                    <ul className='pt-2 flex flex-col h-max'>
+                    <ul className='px-5 pt-2 flex flex-col h-max'>
                         {
                             Menu.Top.map((menu: any, index: any) => {
                                 return <MenuItemComponent
                                     key={Math.random().toString(36).substring(2)}
                                     menu={menu}
-                                    click={handleClick}
                                     open={open}
                                     setOpen={setOpen}
                                     submenuOpen={submenuOpen}
@@ -125,13 +125,9 @@ export default function DrawerComponent(props: any) {
                             })
                         }
                     </ul>
-                    <ul className='flex flex-col h-max'>
-                        {
-                            sessionStatus === "authenticated" ?
-                                <UserAuthComponent session={sessionData} /> :
-                                <UserAuthComponent />
-                        }
-                    </ul>
+                </div>
+                <div className='flex flex-col h-max bg-base-500'>
+                    <UserAuthComponent open={open} />
                 </div>
             </div>
         </div>
@@ -139,40 +135,48 @@ export default function DrawerComponent(props: any) {
 }
 
 function UserAuthComponent(props: any) {
+    const { data: sessionData, status: sessionStatus } = useSession()
+    console.log("session", sessionStatus, sessionData)
+
     return <>
-        <li style={{
-            gridTemplateColumns: "auto min-content min-content",
-        }} className={`text-gray-300 text-base grid items-center gap-x-2 cursor-pointer p-2 hover:bg-base-100 duration-300 rounded-md mt-2`}>
+        <div style={{
+            gridTemplateColumns: props.open ? "auto min-content" : "auto",
+        }} className={`grid h-14 items-center gap-x-2 cursor-pointer px-3`}>
             {
-                props.session ?
+                sessionStatus == "authenticated" ?
                     <>
-                        <Link className={`flex items-center gap-x-2 cursor-pointer`} to={`/user/${props.session.data.user.name}`} onClick={handleClick} >
-                            <img src={props.session.data.user.image} className="block h-8 w-8 rounded-full float-left cursor-pointer"></img>
-                            <label className={`cursor-pointer`}>{props.session.data.user.name}</label>
+                        <Link style={{
+                            gridTemplateColumns: props.open ? "max-content auto" : "auto",
+                            justifyItems: props.open ? "start" : "center",
+                        }} className={`grid items-center w-full hover:bg-base-100 p-1 duration-300 rounded-md gap-x-2 cursor-pointer`} to={`/user/${sessionData?.user?.name}`} onClick={handleClick} >
+                            <img src={sessionData?.user?.image || ""} className="block h-9 w-9 rounded-full float-left cursor-pointer"></img>
+                            <label className={`text-gray-300 text-sm cursor-pointer ${!props.open && "hidden"}`}>{sessionData?.user?.name}</label>
                         </Link>
 
-                        <Link className={`flex items-center cursor-pointer`} to={`/settings`} onClick={handleClick} >
-                            <span className="text-xl block float-left cursor-pointer">
-                                <AiFillSetting />
-                            </span>
-                        </Link>
+                        <div className={`flex items-center rounded-md cursor-pointer ${!props.open && "hidden"}`} >
+                            <Link className={`items-center hover:bg-base-100 duration-300 rounded-md p-2`} to={`/settings`} onClick={handleClick} >
+                                <span className="text-xl block float-left cursor-pointer">
+                                    <AiFillSetting />
+                                </span>
+                            </Link>
 
-                        <Link className={`flex items-center cursor-pointer`} to={`/auth/signout`} onClick={handleClick} >
-                            <span className="text-xl block float-left cursor-pointer">
-                                <BiLogOut />
-                            </span>
-                        </Link>
+                            <Link className={`items-center hover:bg-base-100 duration-300 rounded-md p-2`} to={`/auth/signout`} onClick={handleClick} >
+                                <span className="text-xl block float-left cursor-pointer">
+                                    <BiLogOut />
+                                </span>
+                            </Link>
+                        </div>
+
                     </> : <>
-                        <Link className={`flex items-center gap-x-2 cursor-pointer`} to={`/auth/signin`} onClick={handleClick} >
+                        <Link className={`flex items-center hover:bg-base-100 duration-300 rounded-md px-2 gap-x-2 cursor-pointer`} to={`/auth/signin`} onClick={handleClick} >
                             <span className="text-xl grid content-center h-8 w-8 block float-left cursor-pointer">
                                 <BiLogIn />
                             </span>
-                            <label className={`cursor-pointer`}>Sign In</label>
+                            <label className={`cursor-pointer ${!props.open && "hidden"}`}>Sign In</label>
                         </Link>
                     </>
             }
-
-        </li>
+        </div>
     </>
 }
 
@@ -181,7 +185,7 @@ function TitleComponent(props: any) {
         justifyContent: "space-between",
         alignItems: "center",
         gridTemplateColumns: "min-content min-content"
-    }} className="grid h-8">
+    }} className="grid px-5 h-8">
         <h1 className={`text-white origin-left font-medium text-2xl duration-300 ${!props.open && "scale-8"} ${!props.open && "hidden"}`}>
             {props.title}
         </h1>
@@ -201,7 +205,7 @@ function SearchComponent(props: any) {
     return <div style={{
         gridTemplateColumns: props.open ? "min-content auto" : "min-content",
         height: 40 + "px"
-    }} className={`grid items-center gap-x-4 rounded-md bg-base-100 mt-6 py-2 px-2 ${!props.open && "w-min"}`}>
+    }} className={`grid items-center gap-x-4 rounded-md bg-base-100 py-2 px-2 ${!props.open && "w-min"}`}>
         <ImSearch className={`text-white text-xl block float-left cursor-pointer`} />
         <input type={"search"} placeholder='Search' style={{ width: 83 + "%" }} className={`text-base bg-transparent text-white focus:outline-none ${!props.open && "hidden"}`}></input>
     </div>
@@ -212,11 +216,11 @@ function MenuItemComponent(props: any) {
         <li style={{
             justifyContent: "space-between",
         }} className={`text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-base-100 duration-300 rounded-md ${props.menu.spacing ? "mt-9" : "mt-2"}`}>
-            <Link className={`${!props.open && "hidden"} flex items-center gap-x-4 cursor-pointer`} to={props.menu.to ? props.menu.to : "#"} onClick={props.handleClick} >
+            <Link className={`flex items-center gap-x-4 cursor-pointer`} to={props.menu.to ? props.menu.to : "#"} onClick={handleClick} >
                 <span className="text-xl block float-left cursor-pointer">
                     {props.menu.icon ? props.menu.icon : <RiDashboardFill />}
                 </span>
-                <label className={`cursor-pointer`}>{props.menu.title}</label>
+                <label className={`${!props.open && "hidden"} cursor-pointer`}>{props.menu.title}</label>
             </Link>
 
             {props.menu.submenu && props.open && (
@@ -232,8 +236,4 @@ function MenuItemComponent(props: any) {
             </ul>
         )}
     </>
-}
-
-function UserComponent() {
-    return <label></label>
 }

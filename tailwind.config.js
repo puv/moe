@@ -13,6 +13,16 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        base: {
+          "100": "#263242",
+          "200": "#222d3c",
+          "300": "#1E2736",
+          "400": "#1c2432",
+          "500": "#19202D",
+        }
+      }
+
     },
   },
   daisyui: {
@@ -23,11 +33,15 @@ module.exports = {
           "secondary": "#0f766e",     // hsl(var(--s));
           "accent": "#075985",        // hsl(var(--a));
           "neutral": "#111827",       // hsl(var(--n));
-          "base-100": "#1f2937",      // hsv(var(--b1));
           "info": "#60a5fa",          // hsl(var(--in));
           "success": "#34d399",       // hsl(var(--su));
           "warning": "#fbbf24",       // hsl(var(--wa));
           "error": "#f87171",         // hsl(var(--er));
+          "base-100": "#263242",
+          "base-200": "#222d3c",
+          "base-300": "#1E2736",
+          "base-400": "#1c2432",
+          "base-500": "#19202D",
         },
       },
     ],
