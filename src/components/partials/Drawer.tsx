@@ -13,6 +13,8 @@ import { RiCompassDiscoverFill, RiDashboardFill } from 'react-icons/ri';
 import { BiLogOut, BiLogIn } from 'react-icons/bi';
 import { FaTv } from 'react-icons/fa';
 
+import Loading from '@/components/partials/Loading'
+
 const Menu = {
     Top: [
         {
@@ -88,6 +90,9 @@ export default function DrawerComponent(props: any) {
     const setOpen = props.setOpen;
     const submenuOpen = props.submenuOpen;
     const setSubmenuOpen = props.setSubmenuOpen;
+    const { data: sessionData, status: sessionStatus } = useSession();
+
+    console.log("drawer", sessionData, sessionStatus)
 
     return (
         <div id="drawer" className='flex z-10 fixed h-screen'>
@@ -127,33 +132,37 @@ export default function DrawerComponent(props: any) {
                     </ul>
                 </div>
                 <div className='flex flex-col h-max bg-base-500'>
-                    <UserAuthComponent open={open} />
+                    <UserAuthComponent open={open} sessionData={sessionData} sessionStatus={sessionStatus} />
                 </div>
             </div>
         </div>
     );
 }
 
-function UserAuthComponent(props: any) {
-    const { data: sessionData, status: sessionStatus } = useSession()
-    console.log("session", sessionStatus, sessionData)
-
+function UserAuthComponent({ open, sessionData, sessionStatus }: any) {
+    if (sessionStatus === 'loading' || sessionStatus == 'undefined') {
+        return <>
+            <div className={`grid h-14 items-center`}>
+                <Loading />
+            </div>
+        </>
+    }
     return <>
         <div style={{
-            gridTemplateColumns: props.open ? "auto min-content" : "auto",
+            gridTemplateColumns: open ? "auto min-content" : "auto",
         }} className={`grid h-14 items-center gap-x-2 cursor-pointer px-3`}>
             {
                 sessionStatus == "authenticated" ?
                     <>
                         <Link style={{
-                            gridTemplateColumns: props.open ? "max-content auto" : "auto",
-                            justifyItems: props.open ? "start" : "center",
-                        }} className={`grid items-center w-full hover:bg-base-100 p-1 duration-300 rounded-md gap-x-2 cursor-pointer`} to={`/user/${sessionData?.user?.name}`} onClick={handleClick} >
-                            <img src={sessionData?.user?.image || ""} className="block h-9 w-9 rounded-full float-left cursor-pointer"></img>
-                            <label className={`text-gray-300 text-sm cursor-pointer ${!props.open && "hidden"}`}>{sessionData?.user?.name}</label>
+                            gridTemplateColumns: open ? "max-content auto" : "auto",
+                            justifyItems: open ? "start" : "center",
+                        }} className={`grid items-center w-full hover:bg-base-100 p-1 duration-300 rounded-md gap-x-2 cursor-pointer`} to={`/user/${sessionData.user?.name}`} onClick={handleClick} >
+                            <img src={sessionData.user?.image || ""} className="block h-9 w-9 rounded-full float-left cursor-pointer"></img>
+                            <label className={`text-gray-300 text-sm cursor-pointer ${!open && "hidden"}`}>{sessionData.user?.name}</label>
                         </Link>
 
-                        <div className={`flex items-center rounded-md cursor-pointer ${!props.open && "hidden"}`} >
+                        <div className={`flex items-center rounded-md cursor-pointer ${!open && "hidden"}`} >
                             <Link className={`items-center hover:bg-base-100 duration-300 rounded-md p-2`} to={`/settings`} onClick={handleClick} >
                                 <span className="text-xl block float-left cursor-pointer">
                                     <AiFillSetting />
@@ -172,7 +181,7 @@ function UserAuthComponent(props: any) {
                             <span className="text-xl grid content-center h-8 w-8 block float-left cursor-pointer">
                                 <BiLogIn />
                             </span>
-                            <label className={`cursor-pointer ${!props.open && "hidden"}`}>Sign In</label>
+                            <label className={`cursor-pointer ${!open && "hidden"}`}>Sign In</label>
                         </Link>
                     </>
             }

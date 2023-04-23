@@ -10,6 +10,7 @@ import Notifications from '@/components/partials/Notifications';
 import Auth from '@/components/web/auth/index';
 import Home from '@/components/web/others/Home';
 import Error from '@/components/web/others/Error'
+import { useSession } from 'next-auth/react';
 
 export default function Application() {
   const [open, setOpen] = useState(true);

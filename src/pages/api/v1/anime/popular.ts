@@ -8,11 +8,11 @@ async function Popular(req: any, res: any) {
 
     dbConnect();
 
-    // const popular = await Anime.findAll({}, null, {
-    //     limit: req.query.limit || 25,
-    // });
+    const popular = await Anime.find({}, null, {
+        limit: req.query.limit || 25,
+    });
 
-    res.status(201); //.json(popular);
+    res.status(201).json(popular);
 
 }
 
